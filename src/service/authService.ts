@@ -16,7 +16,7 @@ export class AuthService {
             password: hashed,
             role,
         });
-        return(user)
+        return (user)
     }
     async login(email: string, password: string) {
         const user: any = await this.userRepository.findByEmail(email);
@@ -32,19 +32,26 @@ export class AuthService {
         const refreshToken = RefreshToken(user);
         user.refreshToken = refreshToken;
         await this.userRepository.save(user);
-        return { accessToken, refreshToken };
+        return {
+            accessToken, refreshToken, user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        };
     }
-//     async logout(userId: string) {
-//         const user = await this.userRepository.findById(userId);
-//         if (!user) {
-//             throw { status: 404, message: "User not found" };
-//         }
-//         if (!user.refreshToken) {
-//             return { message: "User already logged out" };
-//         }
-//         user.refreshToken = null;
-//         await this.userRepository.save(user);
+    //     async logout(userId: string) {
+    //         const user = await this.userRepository.findById(userId);
+    //         if (!user) {
+    //             throw { status: 404, message: "User not found" };
+    //         }
+    //         if (!user.refreshToken) {
+    //             return { message: "User already logged out" };
+    //         }
+    //         user.refreshToken = null;
+    //         await this.userRepository.save(user);
 
-//         return { message: "Logged out successfully" };
-//     }
+    //         return { message: "Logged out successfully" };
+    //     }
 }

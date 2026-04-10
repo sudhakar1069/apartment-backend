@@ -8,13 +8,13 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(globalLimiter, loginLimiter);
-app.use("/api/auth", authRoutes);
-app.use("/api/apartments", apartRoutes)
-app.use("/uploads", express.static("uploads"));
 app.use(cors({
   origin: "http://localhost:3000",
   credentials: true
 }));
+app.use("/api/auth", authRoutes);
+app.use("/api/apartments", apartRoutes)
+app.use("/uploads", express.static("uploads"));
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });

@@ -11,6 +11,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
     const user = await authService.register(req.body);
     // res.status(201).json(user);
     return successResponse(res,"User registration successfull",user,201)
+    
 });
 
 // LOGIN
